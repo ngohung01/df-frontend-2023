@@ -1,4 +1,39 @@
+*{
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 html {
   height: 100%;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Montserrat', sans-serif; */
 }
+
+header {
+  /* display: inline-block; */
+  border-bottom: 2px solid rgb(109, 107, 107,.2);
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  line-height: 60px;
+  display: flex;
+}
+.logo {
+  flex: 1;
+}
+.logo > p {
+  font-size: 40px;
+  font-weight: 700;
+
+}
+header .container .user_info {
+  display: inline-flex;
+  width: 160px;
+  justify-content: space-evenly;
+  /* justify-content: space-between; */
+}
+
