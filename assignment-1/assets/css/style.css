@@ -1,0 +1,265 @@
+*{
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color : #ccc;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px !important;
+  /* font-family: 'Montserrat', sans-serif; */
+}
+h1,h2,h3,h4,h5,h6 {
+  font-size: 700;
+}
+
+button {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.form_control {
+  width: 100%;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 0 20px ;
+  letter-spacing: 1px;
+}
+.form_submit {
+  width: 120px;
+  height: 40px;
+  border:2px solid #ce1e1e;
+  border-radius: 4px;
+  background-color: #ce1e1e;
+  color : rgb(236, 236, 236);
+  transition: 0.5s;
+  letter-spacing: 1px;
+}
+
+body {
+  position: relative;
+
+}
+
+.wrap {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  z-index: 2;
+  position: absolute;
+  background: linear-gradient(180deg,#000, #fff);
+}
+/* HEADER */
+
+header {
+  /* display: inline-block; */
+  height: 80px; 
+  border-bottom: 3px solid rgb(109, 107, 107,.2);
+}
+
+header .container {
+  width: 80%;
+  margin: 0 auto;
+  /* line-height: 80px; */
+  display: flex;
+}
+.logo {
+  line-height: 80px;
+  flex: 1;
+}
+.logo > p {
+  font-size: 40px;
+  font-weight: 700;
+
+}
+header .container .user_info {
+  display: flex;
+  width: 160px;
+  align-items: center;
+  justify-content: space-evenly;
+  /* justify-content: space-between; */
+}
+header .avatar {
+  width: 45px;
+  height: 45px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+header .avatar > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+}
+
+/* MAIN */
+main {
+  position: relative;
+}
+/* Main search */
+main .container {
+  width: 90%;
+  margin: 40px auto;
+}
+
+main .search_books {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+
+/* main .search_books button {
+  width: 120px;
+  height: 40px;
+  border:2px solid #ce1e1e;
+  border-radius: 4px;
+  background-color: #ce1e1e;
+  color : rgb(236, 236, 236);
+  transition: 0.5s;
+} */
+main .search_books input {
+  width: 300px;
+}
+main .search_books button:hover {
+  background: transparent ;
+  color : rgb(15, 14, 14);
+  border:2px solid #ce1e1e;
+}
+/* Main table */
+table,th,td {
+  border: 2px solid #ccc;
+  text-align: unset;
+  padding: 10px;
+}
+
+main table {
+  margin: 25px 0;
+  width: 100%;
+  border: 2px solid #ccc !important;
+  border-collapse: collapse;
+}
+main table button {
+  background: transparent;
+  color: red;
+  border-bottom:1px solid red;
+  padding:2px;
+  transition: 0.5s;
+}
+
+main table button:hover {
+  font-weight: bold;
+}
+
+/* Book form add */
+section.boxModal {
+  /* display: none; */
+  width: 350px;
+  position: fixed;
+  z-index: 100;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border: 2px solid #ccc;
+}
+section .modal {
+ width: 90%;
+ margin: 20px auto;
+}
+
+section .modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+section .modal_header > h2 {
+  letter-spacing: normal;
+}
+section .modal .close {
+  /* float: right; */
+  color: #ccc;
+  font-size: 28px;
+  font-weight: bold;
+}
+section .modal .close:hover,
+section .modal .close:focus{
+  color: #ce1e1e;
+  cursor: pointer;
+  text-decoration: none;
+}
+/* Book form -> modal body */
+section .modal_body {
+  margin: 20px 0;
+}
+
+section .form_group {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.form_group label {
+  font-weight: 600;
+  padding: 6px 0;
+}
+
+button#create {
+  float: right;
+  margin-bottom: 20px;
+}
+
+button#create:hover {
+  background: transparent;
+  color: blue;
+}
+
+/* Delete boxModal */
+section#deleteBookModal {
+  display: none;
+  position: relative;
+  text-align: center;
+}
+section#deleteBookModal .modal {
+  width: 80%;
+  margin: 20px auto;
+}
+section#deleteBookModal .modal .modal_header {
+  display: block;
+}
+
+section#deleteBookModal .modal_header .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+section#deleteBookModal p {
+  margin: 40px 0 ;
+}
+
+section#deleteBookModal .btn {
+  display: flex;
+  justify-content: space-between;
+}
+.btn #delete:hover {
+  color:#ce1e1e;
+  background: white;
+}
+.btn #cancel {
+  background: rgb(3, 152, 244);
+  color:#ffffff;
+  border : 1px solid rgb(81, 78, 86); ;
+}
+.btn #cancel:hover {
+  background: white;
+  color:rgb(3, 152, 244);
+}
