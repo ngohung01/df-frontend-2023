@@ -41,7 +41,7 @@
         <!-- Form search -->
         <div class="search_books">
           <form action="#">
-            <input type="text" class="form_control" placeholder="Search books">
+            <input type="text" id="searchBooks" class="form_control" placeholder="Search books">
             <button id="addBook" class="form_submit">Add book</button>
           </form>
         </div>
@@ -57,7 +57,7 @@
             </tr>
           </thead>
           
-          <tbody>
+          <tbody id="infBook">
             <tr>
               <td>Refactoring</td>
               <td>Martin Fowler</td>
@@ -71,7 +71,7 @@
       </div>
 
       <!-- Add book form -->
-      <section style="display: none;" id="myAddBookForm" class="boxModal">
+      <section id="myAddBookForm" class="boxModal">
         <div class="modal">
           <!-- Modal header -->
           <div class="modal_header">
