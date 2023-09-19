@@ -6,13 +6,15 @@ const $$ = document.querySelectorAll.bind(document);
 const wrap = $(".wrap");
 const myAddBookForm = $("#myAddBookForm");
 const deleteBookForm = $("#deleteBookModal");
+const titleBook = $("#title_book");
 
 // buttons
 const addBtnBook = $("#addBook");
+const createBook = $("#create");
 const closeBoxModal = $$('span[class="close"]');
 const deleteBtnBook = $("#deleteBook");
-const createBook = $("#create");
-
+const removeBook = $("#remove");
+const cancelDeleteModal = $("#cancel");
 //
 const contentBookTable = $("#infBook");
 let closeNameBtn = "";
@@ -22,7 +24,7 @@ const searchInput = $("#searchBooks");
 const nameBook = $("#name");
 const authorBook = $("#author");
 const topicBook = $("#topic");
-// console.log(searchBooks)
+// console.log(removeBook)
 
 // console.log(nameBook,authorBook,topicBook,createBook)
 
@@ -66,12 +68,6 @@ createBook.onclick = (e) => {
   }
 };
 
-// When the user clicks the delete book button
-deleteBtnBook.onclick = () => {
-  closeNameBtn = "deleteBook";
-  displayTag(deleteBookForm);
-};
-
 window.onclick = (e) => {
   // Check close button
   const isCloseBtn = [...closeBoxModal].includes(e.target);
@@ -84,6 +80,16 @@ window.onclick = (e) => {
   // When the user clicks the close button
   if (isCloseBtn) {
     closeBox(closeNameBtn);
+  }
+
+  // When the user clicks the cancel button
+  if (e.target === cancelDeleteModal) {
+    displayTag(deleteBookForm, false);
+  }
+
+  // When the user clicks the delete button to delete the book by id
+  if (e.target === removeBook) {
+    deleteBook(removeBook.dataset.id);
   }
 };
 
@@ -121,6 +127,25 @@ function closeBox(closeNameBtn) {
   }
 }
 
+// Function to show Delete Book
+function showDeleteBook(id, title = "") {
+  closeNameBtn = "deleteBook";
+  displayTag(deleteBookForm);
+  console.log(title);
+  titleBook.innerHTML = title;
+  removeBook.setAttribute("data-id", id);
+}
+
+function deleteBook(id) {
+  books.forEach((book, i) => {
+    book.id == id && books.splice(i, 1);
+  });
+  if (searchInput.value !== undefined && searchInput.value.trim() !== "") {
+    searchBooks();
+  } else renderBooksTable(books);
+  displayTag(deleteBookForm, false);
+}
+
 // Render books into table
 function renderBooksTable(books) {
   let html = "";
@@ -131,7 +156,9 @@ function renderBooksTable(books) {
         <td>${book.author}</td>
         <td>${topics[book.topic]}</td>
         <td>
-          <button class="deleteBook">Delete</button>
+          <button class="deleteBook" onclick ="showDeleteBook(${book.id},'${
+      book.title
+    }')">Delete</button>
         </td>
       </tr>
     `;
@@ -154,7 +181,6 @@ function checkRule() {
   let res = false;
   let isNameBook = false;
   let isAuthorBook = false;
-  // res = nameBook.value.trim() !== '' ?  authorBook.value.trim() !== '' ? false : true : true;
   if (nameBook.value !== undefined && nameBook.value.trim() !== "") {
     isNameBook = true;
   }
