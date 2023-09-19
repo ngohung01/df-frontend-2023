@@ -2,11 +2,15 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+const form = $("#form_add_book");
+const inputElements = form.querySelectorAll('input[class="form_control"]');
 // tags
 const wrap = $(".wrap");
 const myAddBookForm = $("#myAddBookForm");
 const deleteBookForm = $("#deleteBookModal");
 const titleBook = $("#title_book");
+const errTitleMessage = $("#name_error");
+const errAuthorMessage = $("#author_error");
 
 // buttons
 const addBtnBook = $("#addBook");
@@ -17,16 +21,14 @@ const removeBook = $("#remove");
 const cancelDeleteModal = $("#cancel");
 //
 const contentBookTable = $("#infBook");
-let closeNameBtn = "";
 
 // inputs
 const searchInput = $("#searchBooks");
 const nameBook = $("#name");
 const authorBook = $("#author");
 const topicBook = $("#topic");
-// console.log(removeBook)
 
-// console.log(nameBook,authorBook,topicBook,createBook)
+let closeNameBtn = "";
 
 let id = 0;
 const books = [];
@@ -50,13 +52,15 @@ searchInput.addEventListener("input", searchBooks);
 // When the user clicks the add book button
 addBtnBook.onclick = () => {
   closeNameBtn = "addBook";
+  errAuthorMessage.innerHTML = "";
+  errTitleMessage.innerHTML = "";
   displayTag(myAddBookForm);
 };
 
-// When the user clicks the button's create at form addBook
+// When the user clicks the button's create at addBook form
 createBook.onclick = (e) => {
   e.preventDefault();
-  if (checkRule()) {
+  if (isValidator()) {
     addBook(nameBook.value, authorBook.value, topicBook.value);
     if (searchInput.value !== undefined && searchInput.value.trim() !== "") {
       searchBooks();
@@ -92,6 +96,18 @@ window.onclick = (e) => {
     deleteBook(removeBook.dataset.id);
   }
 };
+
+// When the user works on the form addBook
+[...inputElements].forEach((inputElement) => {
+  if (inputElement) {
+    inputElement.oninput = () => {
+      Validator(inputElement);
+    };
+    inputElement.onblur = () => {
+      Validator(inputElement);
+    };
+  }
+});
 
 // ================= Declare function ==================
 
@@ -176,21 +192,39 @@ function searchBooks() {
   renderBooksTable(newBooks);
 }
 
-// Rule addBookForm
-function checkRule() {
-  let res = false;
-  let isNameBook = false;
-  let isAuthorBook = false;
-  if (nameBook.value !== undefined && nameBook.value.trim() !== "") {
-    isNameBook = true;
+//  Validators form
+function Validator(inputElement) {
+  let isInputting = false;
+  const parrentE = getParentElement(inputElement, ".form_group");
+  const errMessTag = parrentE.querySelector(".form_message");
+  if (inputElement.value !== undefined && inputElement.value.trim() !== "") {
+    isInputting = true;
+    errMessTag.innerHTML = "";
+  } else {
+    switch (inputElement.id) {
+      case "name":
+        errMessTag.innerHTML = "Title book cannot be empty";
+        break;
+      case "author":
+        errMessTag.innerHTML = "Author book cannot be empty";
+        break;
+    }
   }
-  if (authorBook.value !== undefined && authorBook.value.trim() !== "") {
-    isAuthorBook = true;
-  }
-  if (isNameBook && isAuthorBook) {
-    res = true;
-  }
-  console.log(res);
-  return res;
+  return isInputting;
 }
-// console.log(wrap, closeBoxModal);
+// Return parent element
+function getParentElement(element, selector) {
+  while (element.parentNode) {
+    if (element.parentNode.matches(selector)) {
+      return element.parentNode;
+    } else element = element.parentNode;
+  }
+}
+
+// Result of Validation
+function isValidator() {
+  const newInputElements = [...inputElements].filter((inputElement) => {
+    return Validator(inputElement);
+  });
+  return newInputElements.length === inputElements.length;
+}

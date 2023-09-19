@@ -134,9 +134,14 @@ main .search_books button:hover {
 }
 /* Main table */
 table,th,td {
+
   border: 2px solid #ccc;
   text-align: unset;
   padding: 10px;
+}
+
+td::first-letter {
+  text-transform: uppercase;
 }
 
 main table {
@@ -208,6 +213,7 @@ section .form_group {
 .form_group label {
   font-weight: 600;
   padding: 6px 0;
+  font-size: 1.1em;
 }
 
 button#create {
@@ -218,6 +224,11 @@ button#create {
 button#create:hover {
   background: transparent;
   color: blue;
+}
+
+.form_message {
+  color: #f33a58;
+  padding: 4px 0;
 }
 
 /* Delete boxModal */

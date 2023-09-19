@@ -81,15 +81,17 @@
 
           <!-- Modal body -->
           <div class="modal_body">
-            <form action="#">
+            <form action="#" id="form_add_book">
               <div class="form_group">
                 <label for="name">Name</label>
                 <input type="text" id="name" class="form_control" placeholder="Enter the book title..." required>
+                <span class="form_message" id="name_error"></span>
               </div>
 
              <div class="form_group">
               <label for="author">Author</label>
               <input type="text" id="author" class="form_control" placeholder="Enter author..." required>
+              <span class="form_message" id="author_error"></span>
              </div>
             
              <div class="form_group">
