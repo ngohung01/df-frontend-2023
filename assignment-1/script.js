@@ -49,7 +49,7 @@ renderBooksTable(books);
 searchInput.addEventListener("input", searchBooks);
 
 // When the user clicks the add book button
-addBtnBook.onclick = () => {
+addBtnBook.onclick = (e) => {
   closeNameBtn = "addBook";
 
   displayTag(myAddBookForm);
