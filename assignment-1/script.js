@@ -51,7 +51,7 @@ searchInput.addEventListener("input", searchBooks);
 // When the user clicks the add book button
 addBtnBook.onclick = () => {
   closeNameBtn = "addBook";
-  
+
   displayTag(myAddBookForm);
   resetValueForm();
 };
@@ -63,9 +63,9 @@ createBook.onclick = (e) => {
     addBook(nameBook.value, authorBook.value, topicBook.value);
     toast({
       title: "Success",
-      message: "Successfully added a book",
+      message: `Book ${nameBook.value} is added successfully`,
       type: "success",
-      delay: 1000,
+      delay: 2500,
     });
     if (searchInput.value.trim() !== "") {
       searchBooks();
@@ -81,7 +81,7 @@ removeBook.onclick = function () {
   if (isDel) {
     toast({
       title: "Success",
-      message: `Successfully delete  ${book.title} book`,
+      message: `Book ${book.title} is added successfully`,
       type: "success",
       delay: 3000,
     });
