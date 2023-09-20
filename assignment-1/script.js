@@ -51,9 +51,9 @@ searchInput.addEventListener("input", searchBooks);
 // When the user clicks the add book button
 addBtnBook.onclick = () => {
   closeNameBtn = "addBook";
-  errAuthorMessage.innerHTML = "";
-  errTitleMessage.innerHTML = "";
+  
   displayTag(myAddBookForm);
+  resetValueForm();
 };
 
 // When the user clicks the button's create at addBook form
@@ -71,9 +71,6 @@ createBook.onclick = (e) => {
       searchBooks();
     } else renderBooksTable(books);
     displayTag(myAddBookForm, false);
-    nameBook.value = "";
-    authorBook.value = "";
-    topicBook.value = 0;
   }
 };
 
@@ -208,6 +205,14 @@ function renderBooksTable(books) {
   contentBookTable.innerHTML = html;
 }
 
+// Function reset value form addBook
+function resetValueForm() {
+  nameBook.value = "";
+  authorBook.value = "";
+  topicBook.value = 0;
+  errAuthorMessage.innerHTML = "";
+  errTitleMessage.innerHTML = "";
+}
 // Function search Books by text
 function searchBooks() {
   const newBooks = books.filter((book) =>
