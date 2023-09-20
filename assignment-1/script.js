@@ -11,7 +11,6 @@ const deleteBookForm = $("#deleteBookModal");
 const titleBook = $("#title_book");
 const errTitleMessage = $("#name_error");
 const errAuthorMessage = $("#author_error");
-
 // buttons
 const addBtnBook = $("#addBook");
 const createBook = $("#create");
@@ -62,7 +61,13 @@ createBook.onclick = (e) => {
   e.preventDefault();
   if (isValidator()) {
     addBook(nameBook.value, authorBook.value, topicBook.value);
-    if (searchInput.value !== undefined && searchInput.value.trim() !== "") {
+    toast({
+      title: "Success",
+      message: "Successfully added a book",
+      type: "success",
+      delay: 1000,
+    });
+    if (searchInput.value.trim() !== "") {
       searchBooks();
     } else renderBooksTable(books);
     displayTag(myAddBookForm, false);
@@ -72,6 +77,20 @@ createBook.onclick = (e) => {
   }
 };
 
+// When the user clicks the delete button to delete the book by id
+removeBook.onclick = function () {
+  const book = books.find((book) => book.id == this.dataset.id);
+  const isDel = deleteBook(this.dataset.id);
+  if (isDel) {
+    toast({
+      title: "Success",
+      message: `Successfully delete  ${book.title} book`,
+      type: "success",
+      delay: 3000,
+    });
+  }
+  // console.log(book,this)
+};
 window.onclick = (e) => {
   // Check close button
   const isCloseBtn = [...closeBoxModal].includes(e.target);
@@ -89,11 +108,6 @@ window.onclick = (e) => {
   // When the user clicks the cancel button
   if (e.target === cancelDeleteModal) {
     displayTag(deleteBookForm, false);
-  }
-
-  // When the user clicks the delete button to delete the book by id
-  if (e.target === removeBook) {
-    deleteBook(removeBook.dataset.id);
   }
 };
 
@@ -147,19 +161,29 @@ function closeBox(closeNameBtn) {
 function showDeleteBook(id, title = "") {
   closeNameBtn = "deleteBook";
   displayTag(deleteBookForm);
-  console.log(title);
   titleBook.innerHTML = title;
   removeBook.setAttribute("data-id", id);
 }
 
 function deleteBook(id) {
-  books.forEach((book, i) => {
-    book.id == id && books.splice(i, 1);
-  });
-  if (searchInput.value !== undefined && searchInput.value.trim() !== "") {
-    searchBooks();
-  } else renderBooksTable(books);
-  displayTag(deleteBookForm, false);
+  try {
+    books.forEach((book, i) => {
+      book.id == id && books.splice(i, 1);
+    });
+    if (searchInput.value.trim() !== "") {
+      searchBooks();
+    } else renderBooksTable(books);
+    displayTag(deleteBookForm, false);
+    return true;
+  } catch (error) {
+    toast({
+      title: "Erorr",
+      message: "An error has occurred",
+      type: "error",
+      delay: 1000,
+    });
+    return false;
+  }
 }
 
 // Render books into table
@@ -227,4 +251,74 @@ function isValidator() {
     return Validator(inputElement);
   });
   return newInputElements.length === inputElements.length;
+}
+
+// Toast function
+function toast({ title = "", message = "", type = "info", delay = 3000 }) {
+  const main = $("#toast");
+  const icons = {
+    success: "fa-solid fa-circle-check",
+    info: "fa-solid fa-circle-info",
+    warning: "fa-sharp fa-solid fa-circle-exclamation",
+    error: "fa-sharp fa-solid fa-circle-exclamation",
+  };
+  if (main) {
+    const toastE = document.createElement("div");
+
+    // Auto remove toast
+    const idRemoveToast = setTimeout(() => {
+      main.removeChild(toastE);
+    }, delay + 1000);
+    // Remove when click close
+    toastE.onclick = (e) => {
+      const btnClose = e.target.closest(".toast__close");
+      if (btnClose) {
+        main.removeChild(toastE);
+        clearTimeout(idRemoveToast);
+      }
+    };
+
+    toastE.classList.add("toast", `toast--${type}`);
+    toastE.innerHTML = `
+      <div class="toast__icon">
+        <i class="${icons[type]}"></i>
+      </div>
+      <div class="toast__body">
+        <h3 class="toast_title">${title}</h3>
+        <p class="toast_message">${message}</p>
+      </div>
+      <div class="toast__close">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+    `;
+    main.appendChild(toastE);
+    // Animation
+    toastE.animate(
+      [
+        {
+          opacity: 0,
+          transform: "translateX(calc(100% + 32px))",
+        },
+        {
+          opacity: 1,
+          transform: "translateX(0)",
+        },
+      ],
+      { duration: 300, easing: "ease" }
+    );
+
+    toastE.animate(
+      [
+        {
+          opacity: 0,
+        },
+      ],
+      {
+        duration: 1000,
+        easing: "linear",
+        delay: delay,
+        fill: "forwards",
+      }
+    );
+  }
 }
